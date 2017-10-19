@@ -1,0 +1,72 @@
+page-interview {
+  font-family: brandon;
+  .quesky{
+    width:30px;
+    height: 30px;
+    margin-left: -35px;
+    position: absolute;
+  }
+  .jawaban{
+    background-color:#f4f2f7;
+    border-radius:10px;
+    border-color:#e7e8e9;
+    border-width: 1px;
+  }
+  .box{
+    padding-top:1rem;
+    padding-bottom: 1rem;
+    padding-left:16px;
+    padding-right:6px;
+  }
+  .numsky{
+
+  }
+  .login-button {
+      width: 100%;
+      background-color:#39b54a;
+      border-radius: 10px;
+      font-size: 2.5rem;
+      text-transform: capitalize;
+      margin-left: 0%;
+      font-weight: strong;
+      align-self: center;
+      font-family: comic;
+  }
+.login-button:hover{
+    background-color: #00a09a;
+  }
+
+  .question{
+    .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner{
+      box-shadow:none !important;
+    }
+    .item-md.item-input.input-has-focus .item-inner{
+      box-shadow:none !important;
+    }
+    .card-header-md{
+      border-bottom-color:#f4f2f7;
+      border-bottom-width:2px;
+      border-bottom-style: solid;
+      white-space: normal;
+      color: #39b54a;
+    }
+    border-radius: 10px;
+  }
+  ion-toolbar{
+    .toolbar-background{
+        background-color: #dedce2;
+        color:black;
+    }
+    ion-title{
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0 90px 1px;
+      width: 100%;
+      height: 100%;
+      font-size: 3rem;
+      text-align: center;
+      font-family: comic;
+    }
+  }
+}

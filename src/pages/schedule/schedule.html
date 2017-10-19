@@ -1,0 +1,165 @@
+<!--
+  Generated template for the Schedule page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<!-- <ion-content #popoverContent padding class="popover-page">
+    <ion-row>
+    </ion-row>
+    <ion-row center *ngFor="let sched of schedule">
+      <ion-col class="day">
+      {{sched.name}}
+    </ion-col>
+    <ion-col>
+    </ion-col>
+      <div  *ngFor="let item of sched.slots" >
+        <template [ngIf]="item.available == false">
+        <ion-col class="noTime">
+          {{item.time}}
+        </ion-col>
+      </template>
+      <template [ngIf]="item.available == true">
+      <ion-col class="time">
+        {{item.time}}
+      </ion-col>
+    </template>
+      </div>
+    </ion-row>
+</ion-content> -->
+
+<!--
+  Generated template for the Kelas page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+      <ion-toolbar class="main">
+        <!-- <ion-buttons left>
+          <button ion-button icon-only class="backbut" navPop>
+            <ion-icon name="md-arrow-round-back"></ion-icon>
+          </button>
+        </ion-buttons> -->
+        <ion-title>
+          <img src="assets/logowhite.png"/>
+        </ion-title>
+
+      </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<ion-grid>
+  <ion-row class="calendar" *ngIf="stateVerification != 1 && stateVerification != 2">
+    <ion-col>
+      <button ion-button clear full rounded style="background-color:#53b538;color:white;" class="teaching" (click)="onOff = false;" *ngIf="onOff == true">Teaching</button>
+      <button ion-button clear full rounded style="background-color:red;color:white;" class="holiday" (click)="onOff = true;" *ngIf="onOff == false">On Holiday</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button clear full style="background-color:#53b538;color:white;" class="teaching" (click)="openCalendar()">Open Calendar</button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="top">
+    <ion-col width-33 offset-33 class="middleTop">
+    <button clear (click)="openModal('Monday')" *ngIf="onOff == true">
+      <img src="assets/orangemon.png" class="image" *ngIf="monday == true"/>
+      <img src="assets/greymon.png" class="image" *ngIf="monday == false"/>
+    </button>
+    <button clear (click)="presentAlert('Status saat ini holiday')" *ngIf="onOff == false">
+      <img src="assets/greymon.png" class="image"/>
+    </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="middle">
+    <ion-col width-33 class="sides">
+      <button clear (click)="openModal('Saturday')" *ngIf="onOff == true">
+        <img src="assets/orangesat.png" class="image" *ngIf="saturday == true"/>
+        <img src="assets/greysat.png" class="image" *ngIf="saturday == false"/>
+      </button>
+      <button clear (click)="presentAlert('Status saat ini holiday')" *ngIf="onOff == false">
+        <img src="assets/greysat.png" class="image"/>
+      </button>
+    </ion-col>
+
+    <ion-col width-33 class="middleMid">
+      <button clear (click)="openModal('Sunday')" *ngIf="onOff == true">
+        <img src="assets/orangesun.png" class="image" *ngIf="sunday ==  true"/>
+        <img src="assets/greysun.png" class="image" *ngIf="sunday == false"/>
+        </button>
+        <button clear (click)="presentAlert('Status saat ini holiday')" *ngIf="onOff == false">
+          <img src="assets/greysun.png" class="image"/>
+        </button>
+    </ion-col>
+
+    <ion-col width-33 class="sides">
+      <button clear (click)="openModal('Tuesday')" *ngIf="onOff == true">
+        <img src="assets/orangetue.png" class="image" *ngIf="tuesday ==  true"/>
+        <img src="assets/greytue.png" class="image" *ngIf="tuesday == false"/>
+      </button>
+      <button clear (click)="presentAlert('Status saat ini holiday')" *ngIf="onOff == false">
+        <img src="assets/greytue.png" class="image"/>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="bottom">
+    <ion-col width-33 class="sides">
+      <button clear (click)="openModal('Friday')" *ngIf="onOff == true">
+        <img src="assets/orangefri.png" class="image" *ngIf="friday ==  true"/>
+        <img src="assets/greyfri.png" class="image" *ngIf="friday == false"/>
+      </button>
+      <button clear (click)="presentAlert('Status saat ini holiday')" *ngIf="onOff == false">
+        <img src="assets/greyfri.png" class="image"/>
+      </button>
+    </ion-col>
+
+    <ion-col width-33 class="middleBottom">
+      <button clear (click)="openModal('Thursday')" *ngIf="onOff == true">
+        <img src="assets/orangethu.png" class="image" *ngIf="thursday ==  true"/>
+        <img src="assets/greythu.png" class="image" *ngIf="thursday == false"/>
+      </button>
+      <button clear (click)="presentAlert('Status saat ini holiday')" *ngIf="onOff == false">
+        <img src="assets/greythu.png" class="image"/>
+      </button>
+    </ion-col>
+
+    <ion-col width-33 class="sides">
+      <button clear (click)="openModal('Wednesday')" *ngIf="onOff == true">
+        <img src="assets/orangewed.png" class="image" *ngIf="wednesday ==  true"/>
+        <img src="assets/greywed.png" class="image" *ngIf="wednesday == false"/>
+      </button>
+
+      <button clear (click)="presentAlert('Status saat ini holiday')" *ngIf="onOff == false">
+        <img src="assets/greywed.png" class="image"/>
+      </button>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row class="block" style="font-size:2rem; text-align:center;">
+    Jika kamu berhalangan pada tanggal tertentu block disini
+  </ion-row>
+  <ion-row class="calendar" style="font-size:5rem; text-align:center;">
+    <ion-col><ion-icon name="ios-calendar"></ion-icon></ion-col>
+    <ion-col>
+              <input type="date" [(ngModel)]="inactiveDate">
+            </ion-col>
+  </ion-row> -->
+  <ion-row>
+    <ion-col>
+      <button ion-button full rounded center style="background-color:#39b54a" class="login-button" (click)="dismiss()">
+        Back
+      </button>
+    </ion-col>
+
+    <ion-col>
+      <button ion-button full rounded center style="background-color:#39b54a" class="login-button" (click)="updateSchedule()">
+        Save
+      </button>
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
+</ion-content>

@@ -1,0 +1,376 @@
+import { Component, ViewChild } from '@angular/core';
+import { NavController, ViewController, AlertController, LoadingController, NavParams, ModalController, ActionSheetController, ToastController, Platform, Content, Loading } from 'ionic-angular';
+import { UserService } from '../../providers/user-service';
+import { Zapier } from '../../providers/zapier';
+import { KelasPage } from '../kelas/kelas';
+import { SettingPage } from '../setting/setting';
+import { ReviewPage } from '../review/review';
+import { BookingPage } from '../booking/booking';
+import { SchedulePage } from '../schedule/schedule';
+import { VerificationPage } from '../verification/verification';
+import { CustomerservicePage } from '../customerservice/customerservice';
+import * as firebase from 'firebase';
+import { FilePath } from '@ionic-native/file-path';
+import { FileOpener } from '@ionic-native/file-opener';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+import { File } from '@ionic-native/file';
+import { Camera, CameraOptions } from '@ionic-native/Camera';
+import { Network } from '@ionic-native/network';
+import { ErrorPage } from '../error/error';
+
+declare var cordova: any
+declare var window;
+/*
+  Generated class for the Home page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+*/
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html',
+  providers: [UserService]
+})
+export class HomePage {
+  @ViewChild(Content) content: Content;
+  user: any = [];
+  loading: Loading;
+  today: any;
+  myUserId: any;
+  cartData: any = [];
+  cartStatus: any;
+  cartId: any;
+  chatData: any = [];
+  orderData: any = [];
+  sessionData: number = 0;
+  schedule: any = [];
+  role: any;
+  latLng: any = { lat: 0, lng: 0 };
+  smsVerification: any;
+  murid: any = [];
+  status: any = false;
+  smsVerificationCode: any;
+
+  constructor(
+    public network: Network,
+    public zapier: Zapier,
+    public actionSheetCtrl: ActionSheetController,
+    public toastCtrl: ToastController,
+    public Camera: Camera,
+    public File: File,
+    public FilePath: FilePath,
+    public FileChooser: FileChooser,
+    public navCtrl: NavController,
+    public params: NavParams,
+    public userService: UserService,
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController
+  ) {
+    // this.updateDatabase();
+
+
+    // this.displayUser(this.myUserId);
+
+  }
+  ionViewWillEnter() {
+
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      disconnectSubscription.unsubscribe();
+      let a = this.loadingCtrl.create();
+      a.dismissAll();
+      this.navCtrl.push(ErrorPage);
+    });
+    this.myUserId = firebase.auth().currentUser.uid;
+    this.getUser();
+  }
+  getUser() {
+    let loader = this.loadingCtrl.create({
+      content: '<img src="./assets/loading.gif"/>',
+      spinner: 'hide'
+    });
+    this.userService.getUserDataOnce(this.myUserId).subscribe(snapshot => {
+      console.log(snapshot.val());
+      var data = snapshot.val();
+      this.user = data;
+      this.user.userId = snapshot.key;
+      if (data.stateVerification < 4) {
+
+        if (data.smsVerificationStatus != true) {
+          let smsobj = { uid: this.myUserId, phoneNumber: data.phoneNumber, email: data.email, verificationCode: data.smsVerificationCode, textMessage: "Ini adalah verification code dari LESGO!" };
+          this.sendCode(smsobj);
+          this.smsAlert(smsobj, data.phoneNumber, this.myUserId, data.smsVerificationCode, data);
+        } else {
+          this.tutorAlert(data);
+        }
+      } else if (data.stateVerification < 7) {
+        let tutorAlert = this.alertCtrl.create({
+          title: 'Selamat datang di Lesgo!',
+          enableBackdropDismiss: false,
+          message: 'Aplikasi anda telah disetujui. Lanjutkan proses administrasi Anda.',
+          buttons: [
+            {
+              text: 'Next',
+              handler: () => {
+                this.navCtrl.setRoot(VerificationPage, { dataUser: data });
+              }
+            }
+          ]
+        });
+        console.log(this.user);
+        tutorAlert.present();
+      }
+      else {
+        this.chatNotificationCs();
+        this.chatNotificationMurid();
+        this.totalOrder();
+        console.log(this.user)
+        this.status = true;
+        loader.dismissAll();
+      }
+    })
+  }
+  public uploadImage(data, fileType) {
+    // Destination URL
+    let storageRef = firebase.storage().ref(this.user.userId);
+
+    const filename = fileType;
+    const imageRef = storageRef.child(`${filename}.png`);
+
+    this.loading = this.loadingCtrl.create({
+      content: '<img src="./assets/loading.gif"/>',
+      spinner: 'hide'
+    });
+    this.loading.present();
+    imageRef.putString(data, 'base64', { contentType: 'image/jpg' }).then((snapshot) => {
+      this.user.avatar = snapshot.downloadURL;
+      this.loading.dismissAll()
+    }, err => {
+      this.presentToast('Error while uploading file');
+    });
+
+  }
+
+  chatNotificationCs() {
+    this.userService.getChatCsStatus(this.myUserId).subscribe(snapshot => {
+      console.log(snapshot);
+      if (snapshot.length != 0) {
+        this.chatData.cs = [];
+        snapshot.forEach(o => {
+          if (o.status == false) {
+            this.chatData.cs.push(o);
+          }
+        })
+      }
+    })
+  }
+  chatNotificationMurid() {
+    this.userService.getChatTutorStatus(this.myUserId).subscribe(snapshot => {
+      this.chatData = [];
+      console.log(snapshot);
+      if (snapshot.length != 0) {
+        this.chatData.murid = [];
+        snapshot.forEach(o => {
+          if (o.status == false) {
+            this.chatData.murid.push(o);
+          }
+        })
+      }
+    })
+  }
+  totalOrder() {
+    this.userService.tutorCariMurid(this.myUserId).subscribe(snapshot => {
+      this.orderData = [];
+      this.sessionData = 0;
+      if (snapshot.length != 0) {
+        this.orderData = [];
+        this.sessionData = 0;
+        snapshot.forEach(a => {
+          if (a.status == 'booked') {
+            this.orderData.push(a);
+            this.sessionData = this.sessionData + a.sessions.length;
+          }
+        })
+      }
+
+    })
+  }
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  // Always get the accurate path to your apps folder
+  public pathForImage(img) {
+    if (img === null) {
+      return '';
+    } else {
+      return cordova.file.dataDirectory + img;
+    }
+  }
+  public takePicture(sourceType, fileType) {
+    // Create options for the Camera Dialog
+    const options: CameraOptions = {
+      quality: 50,
+      sourceType: sourceType,
+      saveToPhotoAlbum: true,
+      allowEdit: true,
+      targetWidth: 600,
+      targetHeight: 600,
+      destinationType: 0,
+      encodingType: this.Camera.EncodingType.JPEG,
+      mediaType: 0,
+      correctOrientation: true
+    };
+
+    // Get the data of an image
+    this.Camera.getPicture(options).then((imagePath) => {
+      // Special handling for Android library
+      this.uploadImage(imagePath, fileType);
+    }, (err) => {
+      this.presentToast('Foto tidak terpilih');
+    });
+  }
+
+  public presentActionSheet(fileType) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Image Source',
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.takePicture(0, fileType);
+          }
+        },
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.takePicture(1, fileType);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+  navigateMe(name: string) {
+    if (name == 'BookingPage') {
+      this.navCtrl.push(BookingPage, { uid: this.myUserId });
+    }
+    else if (name == 'SchedulePage') {
+      this.navCtrl.push(SchedulePage, { uid: this.myUserId });
+    }
+    else if (name == 'CustomerservicePage') {
+      this.navCtrl.push(CustomerservicePage, { data: this.myUserId, name: this.user.firstName });
+    }
+    else if (name == 'Report') {
+      this.navCtrl.push(ReviewPage, { uid: this.myUserId, dataUser: { firstName: this.user.firstName, lastName: this.user.lastName, avatar: this.user.avatar } });
+    }
+    else if (name == 'Class') {
+      this.navCtrl.push(KelasPage, { dataUser: { uid: this.myUserId }, name: this.user.firstName });
+    }
+    else if (name == 'SettingPage') {
+      this.navCtrl.push(SettingPage);
+    }
+  }
+  sendEmail() {
+    this.zapier.sendNotification({ message: 'Anda telah memesan guru Puja Altiar, yang akan mengajar pada 10 maret 2021 (ini test btw)', title: 'Anda mempunya order', to: 'de5aoAe80lk:APA91bG41x4yMQbbswn5YptnpZZWS58hUBHHRwqLpuwJkVsbQVMqA5wZVrQ_gA15LxbRhqObV7S9BLr3K6OCsgXAQPyIdppc2Sk6ilobJQ2mX4RUsHQDFCNK3wEJrwGY30MhdxCo-x_j' }).subscribe(success => {
+
+    })
+  }
+
+  checkCode(code, uid) {
+    this.zapier.checkSMS({ verificationCode: code, uid: uid }).subscribe(res => {
+      if (res['_body'] == 'Wrong') {
+        return false
+      } else {
+        return
+      }
+    })
+  }
+  updateUserStatus(uid) {
+    this.userService.updateUserData(uid, { smsVerificationStatus: true }).then(() => {
+      return true
+    })
+  }
+  tutorAlert(data) {
+    let tutorAlert = this.alertCtrl.create({
+      title: 'Selamat datang di Lesgo!',
+      enableBackdropDismiss: false,
+      message: 'Anda belum terverifikasi sebagai Mitra Guru LESGO!. Silahkan melakukan verifikasi terlebih dahulu.',
+      buttons: [
+        {
+          text: 'Lesgo!',
+          handler: () => {
+            this.navCtrl.setRoot(VerificationPage, { dataUser: data });
+          }
+        }
+      ]
+    });
+    tutorAlert.present();
+  }
+  sendCode(smsObj) {
+    this.zapier.sendVerificationCode(smsObj).subscribe(res => {
+      return
+
+    });
+
+  }
+  smsAlert(smsObj, phoneNumber, uid, code, data) {
+    let alert = this.alertCtrl.create({
+      title: 'Verifikasi HP',
+      message: 'Kode Verifikasi anda sedang dalam proses pengiriman ke ' + phoneNumber,
+      enableBackdropDismiss: false,
+      inputs: [
+        {
+          name: 'code',
+          placeholder: 'Kode Anda'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Resend Code',
+          handler: datas => {
+            this.resendSMS(smsObj);
+            alert.setMessage('Pengiriman ulang ke nomor telah dilaksanakan ' + phoneNumber);
+            return false
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: datas => {
+
+            if (datas.code != code) {
+              alert.setMessage('Kode verifikasi yang anda masukkan salah ');
+              return false
+            } else {
+              this.updateUserStatus(uid);
+              return this.tutorAlert(data);
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+  resendSMS(smsObj) {
+    this.zapier.sendVerificationCode(smsObj).subscribe(res => {
+      console.log(res);
+      if (res['_body'] == 'success') {
+        return true
+      } else {
+        return false
+      }
+    });
+  }
+
+}

@@ -1,0 +1,69 @@
+<!--
+  Generated template for the ModalSchedule page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row class="Day">
+      <ion-col width-100>
+      <img class="topImg" src="{{image}}"/>
+    </ion-col>
+    </ion-row>
+    <ion-row class="header">
+      <ion-col>AM</ion-col>
+    </ion-row>
+
+    <ion-row class="isiTop" *ngFor="let r of rows">
+      <ion-col width-16 *ngFor="let Time of lengths|slice:(r*6):(r+1)*6 ;let i = index;">
+
+          <img src="assets/{{i+1}}{{buttonAM[r][i]}}.png" (click)="selectHourAM(r, i)" *ngIf="r !=1"/>
+          <img src="assets/{{i+7}}{{buttonAM[r][i+6]}}.png"  (click)="selectHourAM(r, i)" *ngIf="r ==1"/>
+          <!-- <button ion-button clear (click)="selectHourAM(r, i)" *ngIf="r !=1">
+            <img src="assets/{{i+1}}{{buttonAM[r][i]}}.png" />
+          </button>
+          <button ion-button clear (click)="selectHourAM(r, i)" *ngIf="r ==1">
+            <img src="assets/{{i+7}}{{buttonAM[r][i+6]}}.png"/>
+          </button> -->
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row class="header">
+      <ion-col>PM</ion-col>
+    </ion-row>
+
+    <ion-row class="isiTop" *ngFor="let r of rows">
+      <ion-col width-16 *ngFor="let Time of lengths|slice:(r*6):(r+1)*6 ;let i = index;">
+
+          <img src="assets/{{i+1}}{{buttonPM[r][i]}}.png" (click)="selectHourPM(r, i)" *ngIf="r !=1" />
+
+          <img src="assets/{{i+7}}{{buttonPM[r][i+6]}}.png"  (click)="selectHourPM(r, i)" *ngIf="r ==1"/>
+        <!-- <button ion-button clear (click)="selectHourPM(r, i)" *ngIf="r !=1">
+          <img src="assets/{{i+1}}{{buttonPM[r][i]}}.png" />
+        </button>
+        <button ion-button clear (click)="selectHourPM(r, i)" *ngIf="r ==1">
+          <img src="assets/{{i+7}}{{buttonPM[r][i+6]}}.png"/>
+        </button> -->
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="submit">
+      <ion-col>
+        <button ion-button full rounded class="login-button" (click)="cancel()">
+          Cancel
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button full rounded class="login-button"  (click)="submit()">
+            Submit
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

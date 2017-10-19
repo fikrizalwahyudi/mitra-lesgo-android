@@ -1,0 +1,57 @@
+<!--
+  Generated template for the Card page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+      <ion-toolbar>
+        <ion-buttons left>
+          <button ion-button icon-only class="backbut" navPop>
+            <ion-icon name="md-arrow-round-back"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>
+          <img src="assets/logowhite.png"/>
+        </ion-title>
+
+      </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="dataUser.stateVerification==6" style="padding:5%;">
+    <h1> Selamat bergabung sebagai Mitra LESGO!</h1>
+  </div>
+  <!-- <img class="card" style="position:fixed" src="https://firebasestorage.googleapis.com/v0/b/lesgo-uat.appspot.com/o/id%20card%20digitalbalnkkk-01.png?alt=media&token=5da9dc67-1538-41b0-b2c5-d5cbafb28e6c"/> -->
+
+<ion-grid class="card" style="margin-top:5%;background:url('https://firebasestorage.googleapis.com/v0/b/lesgo-uat.appspot.com/o/id%20card%20digitalbalnkkk-01.png?alt=media&token=5da9dc67-1538-41b0-b2c5-d5cbafb28e6c');">
+  <ion-row class="topdat">
+    <ion-col width-80>
+      <h1>T{{dataUser.id}}</h1>
+    </ion-col>
+  </ion-row>
+  <ion-row class="botdat">
+    <ion-col width-30 style="
+    text-align: center;">
+      <img src="{{dataUser.avatar}}"/>
+    </ion-col>
+
+    <ion-col width-60>
+      <p class="title">Nama <span class="answer">: {{dataUser.firstName}} {{dataUser.lastName}}</span></p>
+      <p class="title">Alamat<span class="answer">: {{dataUser.address}}</span></p>
+      <p class="title">Joined <span class="answer">: {{timeMask(dataUser.createDate)}}</span></p>
+    </ion-col>
+  </ion-row>
+  <!-- <h3 class="name"><div class="title">Nama : </div><div class="isi">{{dataUser.firstName}} {{dataUser.lastName}}</div></h3>
+  <h3 class="address"><div class="title">Alamat :</div><div class="isi">{{dataUser.address}}</div></h3>
+  <h3 class="joined"><div class="title">Joined :</div><div class="isi">{{timeMask(dataUser.createDate)}}</div></h3>
+
+   -->
+</ion-grid>
+<ion-row class="buttons" *ngIf="dataUser.stateVerification==6">
+  <ion-col width-100>
+    <button full ion-button class="login-button" (click)="tutor()">LESGO!</button>
+  </ion-col>
+</ion-row>
+</ion-content>

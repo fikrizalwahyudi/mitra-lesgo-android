@@ -1,0 +1,189 @@
+removeEdukasi
+<ion-content style="background:url('assets/patternb.png');background-size:cover;">
+
+  <ion-toolbar top>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="goBack()">
+        <ion-icon name="md-arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-row>
+    <ion-col width-100 class="title">Edukasi</ion-col>
+  </ion-row>
+  <ion-row class="registration">
+    <ion-col>
+      <ion-list>
+        <span *ngFor="let dataSekolah of edukasi;let i=index" style="margin-bottom: 5%;">
+          <ion-row style="margin-bottom: 5%;">
+          <ion-col width-35>
+
+            <ion-item style="background-color: #f8f8f8;">
+              <ion-datetime placeholder="Masuk" displayFormat="YYYY" [min]="mins" [max]="max" [(ngModel)]="dataSekolah.startYear" ></ion-datetime>
+                <!-- <ion-input type="date" (ionChange)="checkDate('start')" [(ngModel)]="startDateRegular"></ion-input> -->
+            </ion-item>
+          </ion-col>
+          <ion-col width-35 *ngIf="dataSekolah.present == false">
+
+            <ion-item style="background-color: #f8f8f8;">
+              <ion-datetime placeholder="Lulus" displayFormat="YYYY" [min]="mins2" [(ngModel)]="dataSekolah.endYear" ></ion-datetime>
+              <!-- <ion-input type="date" (ionChange)="checkDate('stop')" [(ngModel)]="endDateRegular"></ion-input> -->
+            </ion-item>
+          </ion-col>
+
+            <ion-col width-30>
+              <ion-item>
+               <ion-label>Now</ion-label>
+               <ion-checkbox [(ngModel)]="dataSekolah.present"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label>Tingkat Pendidikan</ion-label>
+          <ion-select [(ngModel)]="dataSekolah.tingkatPendidikan">
+            <ion-option value="SMA">SMA</ion-option>
+            <ion-option value="D3">D3</ion-option>
+            <ion-option value="S1">S1</ion-option>
+            <ion-option value="S2">S2</ion-option>
+            <ion-option value="S3">S3</ion-option>
+          </ion-select>
+        </ion-item>
+          <ion-item  class="normalTop">
+            <ion-icon class="icon" name="ios-school-outline" item-left></ion-icon>
+            <ion-input type="text" [(ngModel)]="dataSekolah.university" placeholder="Sekolah / Universitas"></ion-input>
+          </ion-item>
+
+          <ion-item  class="normalTop">
+            <ion-icon class="icon" name="ios-ribbon-outline" item-left></ion-icon>
+            <ion-input type="text" [(ngModel)]="dataSekolah.major" placeholder="Jurusan"></ion-input>
+          </ion-item>
+
+          <ion-item  class="normalTop">
+            <ion-icon class="icon" name="ios-trophy-outline" item-left></ion-icon>
+            <ion-input type="text" [(ngModel)]="dataSekolah.gpa" placeholder="GPA" (ionChange)="checkNilai(i)"></ion-input>
+          </ion-item>
+          <ion-row *ngIf="i > 0">
+            <ion-col width-20 class="addMe"><button ion-button class="remove-button" (click)="removeEdukasi(i)">remove</button></ion-col>
+          </ion-row>
+        </span>
+        <ion-row>
+          <ion-col width-30 class="addMe"><button ion-button class="login-button" (click)="tambah('edukasi')">Tambah Edukasi</button></ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col width-70 class="title">Pengalaman</ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col width-100 class="desc">Tuliskan Pengalaman kamu dalam mengajar / organisasi / bekerja</ion-col>
+  </ion-row>
+  <ion-row class="registration">
+    <ion-col>
+      <ion-list>
+        <span *ngFor="let dataKerja of work;let i = index;" style="margin-bottom: 5%;">
+              <ion-row>
+              </ion-row>
+              <ion-row style="margin-bottom: 5%;">
+              <ion-col width-35>
+                <ion-item style="background-color: #f8f8f8;">
+                  <ion-datetime placeholder="Masuk"  displayFormat="YYYY" [min]="mins" [max]="max" [(ngModel)]="dataKerja.startYear"></ion-datetime>
+                    <!-- <ion-input type="date" (ionChange)="checkDate('start')" [(ngModel)]="startDateRegular"></ion-input> -->
+                </ion-item>
+              </ion-col>
+              <ion-col width-35  *ngIf="dataKerja.present == false">
+                <ion-item style="background-color: #f8f8f8;">
+                  <ion-datetime placeholder="Keluar"  displayFormat="YYYY" [min]="mins2" [(ngModel)]="dataKerja.endYear"></ion-datetime>
+                  <!-- <ion-input type="date" (ionChange)="checkDate('stop')" [(ngModel)]="endDateRegular"></ion-input> -->
+                </ion-item>
+              </ion-col>
+                <ion-col width-30>
+                  <ion-item>
+                   <ion-label>Now</ion-label>
+                   <ion-checkbox [(ngModel)]="dataKerja.present"></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-item  class="normalTop">
+              <ion-icon class="icon" name="ios-briefcase-outline" item-left></ion-icon>
+              <ion-input type="text" [(ngModel)]="dataKerja.company" placeholder="Nama Instansi"></ion-input>
+            </ion-item>
+
+            <ion-item  class="normalTop">
+              <ion-icon class="icon" name="ios-podium-outline" item-left></ion-icon>
+              <ion-input type="text" [(ngModel)]="dataKerja.position" placeholder="Posisi"></ion-input>
+            </ion-item>
+
+            <ion-item  class="normalTop">
+              <ion-textarea [(ngModel)]="dataKerja.jobDesc" class="review" placeholder="Deskripsi Pengalaman"></ion-textarea>
+            </ion-item>
+            <ion-row *ngIf="i > 0">
+              <ion-col width-20 class="addMe"><button ion-button class="remove-button" (click)="removeWork(i)">remove</button></ion-col>
+            </ion-row>
+          </span>
+        <ion-row>
+          <ion-col width-30 class="addMe"><button ion-button class="login-button" (click)="tambah('work')">Tambah Pengalaman</button></ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col width-100>
+      <button ion-button class="finish-button" (click)="submit()">Submit</button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+<!-- <ion-item  class="normal">
+  <ion-icon class="icon" name="ios-phone-portrait" item-left></ion-icon>
+  <ion-input type="text"  [(ngModel)]="telepon"  [textMask]="{mask:mask, modelClean:true}"></ion-input>
+</ion-item> -->
+<!-- <ion-item class="normal" >
+  <ion-icon class="icon" name="ios-mail-outline" item-left></ion-icon>
+  <ion-input type="text" [(ngModel)]="email" placeholder="Email"></ion-input>
+</ion-item>
+
+<ion-item  class="password" >
+  <ion-icon class="icon" name="ios-lock-outline" item-left></ion-icon>
+  <button clear ion-button icon-only item-right (click)="showPass()">
+    <ion-icon name="{{passIcon}}"></ion-icon>
+  </button>
+  <ion-input type="{{passState}}" [(ngModel)]="password" placeholder="Buat Password"></ion-input>
+</ion-item>
+
+<ion-item class="repassword" >
+  <ion-icon class="icon" name="ios-lock-outline" item-left></ion-icon>
+  <button clear ion-button icon-only item-right (click)="showRePass()">
+    <ion-icon name="{{passReIcon}}"></ion-icon>
+  </button>
+  <ion-input type="{{passReState}}" [(ngModel)]="rePassword" placeholder="Konfirmasi Password"></ion-input>
+</ion-item>
+
+<ion-row radio-group [(ngModel)]="gender" >
+  <ion-col width-50>
+    <ion-item>
+      <ion-label>Male</ion-label>
+      <ion-radio value="male" checked></ion-radio>
+    </ion-item>
+  </ion-col>
+    <ion-col width-50>
+      <ion-item>
+        <ion-label>Female</ion-label>
+        <ion-radio value="female"></ion-radio>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+<ion-item>
+  <p item-right> Dengan mendaftar anda telah menyetujui <a (click)="goTo('tnc')">Terms & Condition</a> serta <a (click)="goTo('privacy')">Kebijakan Privasi</a> kami</p>
+</ion-item>
+
+<ion-row>
+  <ion-col>
+    <button ion-button class="login-button" (click)="signMeUp()">Daftar Tutor</button>
+  </ion-col>
+</ion-row> -->

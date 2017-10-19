@@ -1,0 +1,16 @@
+page-letter {
+
+        .login-button {
+            border-radius: 10px;
+            font-size:2rem;
+            border: 1px solid #009900;
+            background-color: #009900;
+            font-family: comic;
+        }
+        .login-button:active {
+          background-color:blue;
+        }
+        .item-md.item-block .item-inner{
+          border-bottom:0!important;
+        }
+}

@@ -1,0 +1,45 @@
+page-verification {
+  font-family: comic;
+  .navbar{
+    background: transparent;
+  }// .toolbar-background{
+  //   background-image: url('../assets/button pendukung-01.png')!important;
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  // }
+  // .bar-buttons-md[end]{
+  //   margin-top: 17%;
+  //   margin-right: 6%;
+  // }
+  // .toolbar{
+  //   height:17%;
+  // }
+  .toolbar-background{
+    background: #39b54a;
+  }
+  ion-title{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 90px 1px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    img{
+      width: 20vw;
+    }
+  }
+  .bar-header {
+    border: 0px !important;
+  }
+  .bar-buttons-md[left]{
+    font-size: 2.5rem;
+  }
+  .bar-buttons-md[right]{
+    font-family: comic;
+  }
+  ion-row{
+    margin-top: 5%;
+    margin-bottom:5%;
+  }
+}

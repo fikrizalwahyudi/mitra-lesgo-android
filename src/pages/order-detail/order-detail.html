@@ -1,0 +1,94 @@
+<!--
+  Generated template for the OrderDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>orderDetail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card class="detailCard">
+  <img src="{{data.tutorAvatar}}">
+  <ion-row>
+    <ion-col>
+      <h2>Good</h2>
+    </ion-col>
+  </ion-row>
+  <!-- <rating [(ngModel)]="rate" readOnly="true" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" (ionChange)="onModelChange($event)"></rating> -->
+
+  <ion-item text-wrap>
+    <ion-icon name="ios-contact-outline" item-left large></ion-icon>
+    <p>Nama Tutor</p>
+    <h2>{{data.tutorName}}</h2>
+  </ion-item>
+
+  <ion-item text-wrap>
+    <ion-icon name="ios-book-outline" item-left large ></ion-icon>
+    <p>Matpel</p>
+    <h2><span *ngFor="let class of data.matpel">{{class.text}}</span></h2>
+    <!-- <p>14 S. Hop Avenue, Madison, WI 53703</p> -->
+  </ion-item>
+
+  <ion-item text-wrap>
+    <ion-icon name="ios-school-outline" item-left large ></ion-icon>
+    <p>Jenis Paket</p>
+    <h2>{{data.jenisPaket}}</h2>
+    <!-- <p>14 S. Hop Avenue, Madison, WI 53703</p> -->
+  </ion-item>
+
+  <ion-item text-wrap>
+    <ion-icon name="ios-pin-outline" item-left large ></ion-icon>
+    <p>Lokasi Belajar Mengajar</p>
+    <h2>{{data.alamatMurid}}</h2>
+    <!-- <p>14 S. Hop Avenue, Madison, WI 53703</p> -->
+  </ion-item>
+
+
+  <!-- <ion-item>
+    <span item-left>Berikan Rating</span>
+    <span item-left></span>
+    <button ion-button icon-left clear item-right>
+      <ion-icon name="navigate"></ion-icon>
+      Start
+    </button>
+  </ion-item> -->
+  </ion-card>
+  <ion-card class="orderCard">
+  <ion-card-header>
+   Session Schedule
+  </ion-card-header>
+  <ion-list *ngFor="let sesi of data.sessions">
+          <ion-item>
+            <h2>{{sesi.day}} {{timeMask(sesi.date)}}  </h2>
+            <h2 item-right> {{sesi.jam}}:00</h2>
+          </ion-item>
+
+          <!-- <ion-item>
+            <ion-icon name="ios-stopwatch-outline" item-left large></ion-icon>
+            <h2>Jam Selesai</h2>
+            <h2 item-right> 09.00 </h2>
+          </ion-item>
+
+          <ion-item text-wrap>
+            <ion-icon name="ios-book-outline" item-left large ></ion-icon>
+            <h2>Mata Pelajaran</h2>
+            <h2 item-right> Matematika </h2>
+          </ion-item>
+
+          <ion-item text-wrap>
+            <p>Hasil Belajar</p>
+            <h2> Hery murid yang baik, pelajaran matematika nya meningkat</h2>
+          </ion-item> -->
+  </ion-list>
+</ion-card>
+<button ion-button icon-left style="margin-left:10%;" [hidden]="status == 'booked'"><ion-icon name="ios-chatbubbles-outline"></ion-icon>Chat</button>
+<button ion-button icon-left style="margin-left:10%;" [hidden]="status == 'booked'"><ion-icon name="ios-call-outline"></ion-icon>Call</button>
+<button ion-button icon-left style="margin-left:10%;" [hidden]="status == 'booked'"><ion-icon name="ios-chatboxes-outline"></ion-icon>SMS</button>
+</ion-content>

@@ -1,0 +1,252 @@
+<ion-header>
+
+  <ion-toolbar class="main">
+    <ion-buttons left>
+      <button ion-button icon-only class="backbut" navPop>
+        <ion-icon name="md-arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <img src="assets/logowhite.png" />
+    </ion-title>
+
+  </ion-toolbar>
+  <ion-toolbar class="subheader">
+    <ion-segment [(ngModel)]="butOff" color="secondary">
+      <ion-segment-button value="pesan">
+        Pesanan Berjalan
+      </ion-segment-button>
+      <ion-segment-button value="riwayat">
+        Riwayat
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+<ion-content>
+  <!-- <div *ngIf="cartHistoryStatus !== true">
+  <ion-list  [virtualScroll]="historyData" [approxItemHeight]="'50px'" [hidden]="butOff != 'riwayat'">
+    <ion-item *virtualItem="let history"   (click)="orderDetail('history')">
+
+      <h2>#{{history.id}}</h2>
+      <p> {{history.startDate}} - {{history.endDate}}</p>
+
+      <span item-content>
+      <h1> {{histroy.status}}</h1>
+      </span>
+
+        <ion-icon item-right name="ios-arrow-forward-outline"></ion-icon>
+    </ion-item>
+  </ion-list>
+  </div> -->
+
+  <!-- <ion-card class="orderCard" [hidden]="butOff != 'pesan'" *ngIf="orders['pending'] != undefined">
+    <ion-card-header>
+      Pending Booking
+    </ion-card-header>
+    <ion-list *ngFor="let pending of orders['paid']">
+      <ion-item (click)="orderDetail(pending,'pending')">
+        <ion-avatar item-left>
+          <img src="{{pending.avatarMurid}}">
+        </ion-avatar>
+
+        <h2>{{pending.namaMurid}}</h2>
+        <h3> {{pending.orderSchedule.startDate}} s.d <br>{{pending.orderSchedule.endDate}}</h3>
+
+        <span item-content>
+     <h3> Rp. {{pending.totalHarga}}</h3>
+     </span>
+        <ion-icon item-right name="ios-arrow-forward-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card> -->
+
+  <ion-card class="orderCard" [hidden]="butOff != 'pesan'" *ngIf="orders['booked'] != undefined">
+    <ion-card-header>
+      Booking Berjalan
+    </ion-card-header>
+    <ion-list *ngFor="let booked of orders['booked']">
+      <ion-item (click)="orderDetail(booked,'booked')">
+        <ion-avatar item-left>
+          <img src="{{booked.avatarMurid}}">
+        </ion-avatar>
+
+        <h2>{{booked.namaMurid}}</h2>
+        <p> {{booked.orderSchedule.startDate}} s.d <br>{{booked.orderSchedule.endDate}}</p>
+
+        <span item-content>
+    <h3> Rp. {{booked.totalHarga}}</h3>
+    </span>
+        <ion-icon item-right name="ios-arrow-forward-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+  <div *ngIf="butOff == 'riwayat' && orders['finish'] != undefined">
+    <ion-list *ngFor="let history of orders['finish']" [hidden]="butOff != 'riwayat'">
+      <ion-item (click)="orderDetail(history,'history')">
+        <ion-avatar item-left>
+          <img src="{{history.avatarMurid}}">
+        </ion-avatar>
+
+        <span item-content>
+      <h2>{{history.namaMurid}}</h2>
+      <p> {{history.orderSchedule.startDate}} s.d <br>{{history.orderSchedule.endDate}}</p>
+    </span>
+
+        <ion-icon item-right name="ios-arrow-forward-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="orders['booked'] == undefined && orders['pending'] == undefined && butOff == 'pesan'">
+    <h2 style="text-align: center;
+    margin-top: 20rem;">Maaf anda belum memiliki booking</h2>
+  </div>
+  <div *ngIf="orders['finish'] == undefined && butOff == 'riwayat'">
+    <h2 style="text-align: center;
+    margin-top: 20rem;">Maaf anda tidak memiliki <br>booking terselesaikan</h2>
+  </div>
+  <!-- <ion-item (click)="orderDetail('ORDERID')">
+
+    <h2>#01020310120</h2>
+    <h3> 16 Feb 2017 - 22 feb 2017</h3>
+
+    <span item-content>
+    <h1> Completed</h1>
+    </span>
+      <ion-icon item-right name="ios-arrow-forward-outline"></ion-icon>
+  </ion-item>
+  <ion-item (click)="orderDetail('ORDERID')">
+    <h2>#01020310120</h2>
+    <p> 16 Feb 2017 - 22 feb 2017</p>
+
+    <span item-content>
+    <h1> Cancelled</h1>
+    </span>
+      <ion-icon item-right name="ios-arrow-forward-outline"></ion-icon>
+  </ion-item> -->
+  <!-- <ion-row>
+    <ion-col width-50 class="button-left"><button class="topButton" (click)="onChange('pesan')" ion-button round>Pemesanan</button></ion-col>
+    <ion-col width-50 class="button-right"><button  class="topButton" (click)="onChange('riwayat')" ion-button round>Riwayat</button></ion-col>
+  </ion-row> -->
+  <!-- <ion-grid [hidden]="butOff != 'pesan'">
+  <ion-row class="labeltop">
+    <ion-col width-20>
+      Order Id
+    </ion-col>
+    <ion-col width-20>
+      Nama Guru
+    </ion-col>
+    <ion-col width-20>
+      Paket
+    </ion-col>
+    <ion-col width-20>
+      Total Sesi
+    </ion-col>
+    <ion-col width-20>
+      Harga Per Sesi
+    </ion-col>
+  </ion-row>
+  <ion-row class="isi">
+    <ion-col width-20>
+      A000307238id
+    </ion-col>
+    <ion-col width-20>
+      Hery Prasetyo
+    </ion-col>
+    <ion-col width-20>
+      Reguler
+    </ion-col>
+    <ion-col width-20>
+      4 Sesi
+    </ion-col>
+    <ion-col width-20>
+      Rp. 100.000
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="subtotal">
+    <ion-col offset-60>
+    </ion-col>
+    <ion-col width-20 class="isi">
+      Sub Total
+    </ion-col>
+    <ion-col width-20 class="isi">
+      Rp. 100.000
+    </ion-col>
+  </ion-row>
+  <ion-row class="promo">
+    <ion-col offset-60>
+    </ion-col>
+    <ion-col width-20 class="isi">
+      Promo
+    </ion-col>
+    <ion-col width-20 class="isi">
+      -
+    </ion-col>
+  </ion-row>
+  <ion-row class="total">
+    <ion-col offset-60>
+    </ion-col>
+    <ion-col width-20 class="isi">
+      Total
+    </ion-col>
+    <ion-col width-20 class="isi">
+      Rp. 100.000
+    </ion-col>
+  </ion-row>
+  <ion-row class="bottom-row">
+    <ion-col width-60 class="details">
+      Detail anda :
+      <br>Nama
+      <br>Alamat
+    </ion-col>
+    <ion-col width-40  class="bayar">
+      <button ion-button danger round (click)="bayar()">
+        Bayar
+      </button>
+    </ion-col>
+  </ion-row>
+  </ion-grid>
+  <ion-grid [hidden]="butOff != 'riwayat'">
+  <ion-row class="labeltop">
+    <ion-col width-20>
+      Order Id
+    </ion-col>
+    <ion-col width-20>
+      Nama Guru
+    </ion-col>
+    <ion-col width-15>
+      Paket
+    </ion-col>
+    <ion-col width-15>
+      Total Sesi
+    </ion-col>
+    <ion-col width-20>
+      Harga Per Sesi
+    </ion-col>
+    </ion-row>
+    <ion-row class="isi">
+      <ion-col width-20>
+        A000307238id
+      </ion-col>
+      <ion-col width-20>
+        Hery Prasetyo
+      </ion-col>
+      <ion-col width-15>
+        Reguler
+      </ion-col>
+      <ion-col width-15>
+        4 Sesi
+      </ion-col>
+      <ion-col width-30>
+        Rp. 100.000
+        <button ion-button round danger>
+          Review
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+</ion-content>

@@ -1,0 +1,167 @@
+<!--
+  Generated template for the OrderDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+
+  <ion-toolbar>
+    <ion-buttons left>
+      <button ion-button icon-only class="backbut" navPop>
+              <ion-icon name="md-arrow-round-back"></ion-icon>
+            </button>
+    </ion-buttons>
+    <ion-title>
+      <img src="assets/logowhite.png" />
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card class="detailCard">
+    <img src="{{data.avatarMurid}}">
+
+    <ion-item text-wrap>
+      <ion-icon name="ios-contact-outline" item-left large></ion-icon>
+      <p>Nama Murid</p>
+      <h2>{{data.namaMurid}}</h2>
+    </ion-item>
+
+    <ion-item text-wrap>
+      <ion-icon name="ios-school-outline" item-left large></ion-icon>
+      <p>Tingkat</p>
+      <h2>{{data.categoryName}} </h2>
+      <!-- <p>14 S. Hop Avenue, Madison, WI 53703</p> -->
+    </ion-item>
+
+
+
+    <ion-item text-wrap>
+      <ion-icon name="ios-pin-outline" item-left large></ion-icon>
+      <p>Lokasi Belajar Mengajar</p>
+      <h2>{{data.alamatMurid}}</h2>
+      <!-- <p>14 S. Hop Avenue, Madison, WI 53703</p> -->
+    </ion-item>
+
+    <ion-item text-wrap>
+      <ion-icon name="ios-people" item-left large></ion-icon>
+      <p>Jumlah Murid</p>
+      <h2>{{data.jumlahMurid}}</h2>
+      <!-- <p>14 S. Hop Avenue, Madison, WI 53703</p> -->
+    </ion-item>
+
+
+    <!-- <ion-item>
+    <span item-left>Berikan Rating</span>
+    <span item-left></span>
+    <button ion-button icon-left clear item-right>
+      <ion-icon name="navigate"></ion-icon>
+      Start
+    </button>
+  </ion-item> -->
+  </ion-card>
+
+  <ion-card class="orderCard">
+    <ion-card-header>
+      Detail Sesi
+    </ion-card-header>
+    <ion-list *ngFor="let sesi of data.sessions;let i=index">
+      <ion-item (click)="sessionDetail(i)">
+        <!-- <ion-avatar item-left>
+        <img src="img/avatar-finn.png">
+      </ion-avatar> -->
+
+        <h3>Sesi {{i+1}}</h3>
+        <h2>{{sesi.status}}</h2>
+        <p> {{sesi.date}}</p>
+
+        <!-- <span item-content>
+      <h1> Review</h1>
+      </span> -->
+        <ion-icon item-right name="ios-arrow-down-outline" [hidden]="sessionActive != i"></ion-icon>
+        <ion-icon item-right name="ios-arrow-forward-outline" [hidden]="sessionActive == i"></ion-icon>
+
+      </ion-item>
+
+      <ion-card class="orderCard" [hidden]="sessionActive != i">
+        <ion-card-header>
+          Sesi {{i+1}}
+        </ion-card-header>
+        <ion-list>
+
+          <ion-item>
+            <ion-icon name="ios-stopwatch-outline" item-left large></ion-icon>
+            <h2>Waktu Mulai</h2>
+            <h2 item-right> {{sesi.jam}}:00 </h2>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="ios-clock-outline" item-left large></ion-icon>
+            <h2>Jam Mulai</h2>
+            <h2 item-right> {{sesi.jamStart}} </h2>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="ios-clock-outline" item-left large></ion-icon>
+            <h2>Jam Selesai</h2>
+            <h2 item-right> {{sesi.jamEnd}} </h2>
+          </ion-item>
+          <!-- <ion-item text-wrap>
+              <ion-icon name="ios-book-outline" item-left large ></ion-icon>
+              <p>Matpel</p>
+              <h2><span *ngFor="let matpel of data.matpel">{{matpel.text}}</span></h2>
+            </ion-item> -->
+
+          <ion-item text-wrap *ngIf="sesi.status == 'finish'">
+            <p>Hasil Belajar</p>
+            <h2> {{sesi.review}}</h2>
+          </ion-item>
+        </ion-list>
+        <ion-row *ngIf="sesi.status != 'finish'">
+          <ion-col width-100 class="startBut">
+            <button *ngIf="sesi.jamStart == 0" ion-button class="login-button" (click)="startLesson(i)">Mulai Belajar</button>
+            <button *ngIf="sesi.jamStart != 0" ion-button class="stop-button" (click)="endLesson(i)">Selesai Belajar</button>
+            <button *ngIf="sesi.review != '' && sesi.jamEnd != 0" ion-button class="login-button" (click)="reviewSession(i)">Review Sesi</button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+  </ion-card>
+  <ion-grid style="text-align:center">
+    <ion-row>
+      <!-- <ion-col *ngIf="data.status == 'cart'">
+          <button class="login-button" ion-button icon-left large full (click)="deleteOrder()"><ion-icon name="md-close"></ion-icon>Delete Order</button>
+        </ion-col> -->
+      <ion-col *ngIf="data.status == 'booked'">
+        <button class="login-button" ion-button icon-left (click)="chatMe()">
+          <ion-icon name="ios-chatbubbles-outline">
+              <ion-badge id="notifications-badge" *ngIf="countChat" color="notif" >{{countChat}}</ion-badge>
+          </ion-icon>
+          Chat
+        </button>
+        <!-- <ion-badge class="notif" *ngIf="chatData.murid != undefined && chatData.murid.length > 0">{{chatData.murid.length}}</ion-badge> -->
+      </ion-col>
+      <ion-col *ngIf="data.status == 'booked'">
+        <button class="login-button" ion-button icon-left (click)="callMe()"><ion-icon name="ios-call-outline"></ion-icon>Call</button>
+      </ion-col>
+      <ion-col *ngIf="data.status == 'booked'">
+        <button class="login-button" ion-button icon-left (click)="smsMe()"><ion-icon name="ios-chatboxes-outline"></ion-icon>SMS</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="data.status == 'finish' && status == false">
+      <ion-col>
+        <button class="login-button" ion-button icon-left large full (click)="reviewTutor()">Review Tutor</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-row *ngIf="data.status != 'finish'">
+    <!-- <ion-col>
+        <button class="login-button" ion-button icon-left large full (click)="endOrder()">Order Selesai</button>
+      </ion-col> -->
+  </ion-row>
+</ion-content>

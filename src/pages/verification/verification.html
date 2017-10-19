@@ -1,0 +1,51 @@
+<!--
+  Generated template for the Verification page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <img src="assets/logowhite.png"/>
+        </ion-title>
+
+      </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid *ngIf="dataUser.stateVerification != undefined">
+    <ion-row *ngIf="dataUser.stateVerification < 3">
+      <ion-col>
+        <button ion-button full large disabled="{{button[0]}}" (click)="navigateMe('ProfilePage')">Step 1 Profile</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="dataUser.stateVerification > 0 && dataUser.stateVerification < 3">
+      <ion-col>
+        <button ion-button color="secondary" full large disabled="{{button[1]}}" (click)="navigateMe('SchedulePage')">Step 2 Schedule</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="dataUser.stateVerification > 1 && dataUser.stateVerification < 3">
+      <ion-col>
+        <button ion-button color="danger" full large disabled="{{button[2]}}" (click)="navigateMe('KelasPage')">Step 3 Product</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="dataUser.stateVerification > 2 && dataUser.stateVerification < 4">
+      <ion-col>
+        <button ion-button color="light" full large disabled="{{button[3]}}" (click)="navigateMe('InterviewPage')">Step 4 Interview</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="dataUser.stateVerification == 5">
+      <ion-col>
+        <button ion-button color="dark" full large disabled="{{button[4]}}" (click)="navigateMe('LetterPage')">Step 5 Sign-off letter</button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="dataUser.stateVerification == 6">
+      <ion-col>
+        <button ion-button color="dark" full large disabled="{{button[5]}}" (click)="navigateMe('CardPage')">Get your ID Card</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
