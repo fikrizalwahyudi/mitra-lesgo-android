@@ -96,7 +96,9 @@ const confis = {
     HttpModule,
     TextMaskModule,
     IonicImageViewerModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode:'ios'
+    }),
     Ionic2RatingModule,
     AngularFireModule.initializeApp(confis),
     AgmCoreModule.forRoot({

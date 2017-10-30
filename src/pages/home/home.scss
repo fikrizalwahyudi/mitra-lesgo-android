@@ -1,10 +1,12 @@
 
+.ios, .md {
 page-home {
   font-family: brandon;
   .dead{
     // background:black !important;
   }
   .active{
+
   }
   ion-content{
     background:url('./assets/patternb.png');
@@ -92,6 +94,10 @@ page-home {
   .toolbar-background-md{
     background: #39b54a;
   }
+
+  .toolbar-background-ios{
+    background: #39b54a;
+  }
   ion-title{
     img{
       width: 20vw;
@@ -141,4 +147,5 @@ page-home {
     text-align: center;
   }
 
+}
 }

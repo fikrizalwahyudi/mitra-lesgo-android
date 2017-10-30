@@ -42,9 +42,11 @@
           </ion-col>
         </ion-row>
       </ion-col>
-
-
     </ion-row>
+
+  </ion-grid>
+
+  <ion-grid >
     <ion-row>
       <ion-col width-40 class="colLines"><img class="logo" src="assets/Button Utama-04.svg" (click)="navigateMe('BookingPage')" />
         <ion-badge class="notif" *ngIf="chatData.murid != undefined && chatData.murid.length > 0">{{chatData.murid.length}}</ion-badge>

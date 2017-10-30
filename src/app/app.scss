@@ -61,7 +61,62 @@
   }
 }
 
+.loading-ios {
+  .loading-wrapper {
+    background: transparent;
+    box-shadow: none;
+  }
+  img {
+    width: 10vw;
+    height: 10vw;
+  }
+  .loading-content {
+    background: transparent;
+  }
+}
+
 .alert-md {
+  ion-backdrop {
+    opacity: 1!important;
+  }
+  .alert-wrapper {
+    border-radius: 20px !important;
+  }
+  .alert-head {
+    background-color: #999 !important;
+    text-align: center;
+    color: white;
+    font-family: comic;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 10px;
+  }
+  .alert-title {
+    font-size: 26px;
+  }
+  .alert-message {
+    padding-top: 18px;
+    color: black;
+    font-family: brandon-bold;
+  }
+  .alert-button {
+    border-radius: 10px;
+    background-color: #39b54a;
+    color: white;
+    font-family: comic;
+    text-align: left;
+    margin: auto;
+  }
+  .alert-button:hover {
+    background-color: green;
+  }
+  .alert-button-group {
+    justify-content: center;
+    padding: 8px;
+  }
+}
+
+.alert-ios {
   ion-backdrop {
     opacity: 1!important;
   }
@@ -137,6 +192,41 @@
   }
 }
 
+.action-sheet-ios {
+  text-align: center !important;
+  .action-sheet-container {
+    padding: 0 !important;
+  }
+  .action-sheet-title {
+    padding-top: 17px !important;
+    font-size: 1.6em !important;
+    text-align: center !important;
+    margin-bottom: 5%;
+    background-color: #999;
+    color: white;
+    font-family: comic;
+  }
+  .action-sheet-button {
+    text-align: center !important;
+    border-radius: 10px !important;
+    margin-left: 10% !important;
+    margin-right: 10% !important;
+    margin-bottom: 2%;
+    width: 80% !important;
+    text-transform: uppercase;
+    font-family: brandon-bold;
+    background-color: #39b54a !important;
+    .button-inner {
+      text-align: center !important;
+    }
+  }
+  .action-sheet-group {
+    .button-inner {
+      justify-content: center!important;
+    }
+  }
+}
+
 .toast-container {
   justify-content: center!important;
   font-family: brandon!important;
@@ -144,6 +234,18 @@
 }
 
 .toast-md {
+  justify-content: center!important;
+  text-align: center!important;
+  font-family: brandon !important;
+  .toast-message {
+    justify-content: center!important;
+    text-align: center!important;
+    font-family: brandon !important;
+    font-size: 1.8rem !important;
+  }
+}
+
+.toast-ios {
   justify-content: center!important;
   text-align: center!important;
   font-family: brandon !important;
