@@ -603,14 +603,6 @@ export class HomePage {
     alert.present();
   }
   resendSMS(smsObj) {
-    //   this.zapier.sendVerificationCode(smsObj).subscribe(res => {
-    //     console.log(res);
-    //     if (res['_body'] == 'success') {
-    //       return true
-    //     } else {
-    //       return false
-    //     }
-    //   });
     this.zapier.sendverifivationCodeServer(smsObj).subscribe(res => {
       console.log(res);
       if (res['_body'] == 'success') {

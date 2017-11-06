@@ -92,7 +92,6 @@
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.5.7:8100" />
     <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="~4.3.1" />
     <plugin name="com.megster.cordova.FileChooser" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-calendar" spec="^4.5.5">
@@ -116,4 +115,5 @@
         <variable name="SENDER_ID" value="732818088048" />
     </plugin>
     <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
+    <engine name="ios" spec="~4.4.0" />
 </widget>
