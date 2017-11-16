@@ -106,7 +106,7 @@ export class MyApp {
 
     this.pushObject.on('registration').subscribe((registration: any) => {
       console.log('registration push', registration)
-      firebase.database().ref('users/' + uid).update({ deviceId: registration.registrationId })
+      firebase.database().ref('users/' + uid).update({ deviceId: registration.registrationId, device: 'ios' })
     });
     this.pushObject.on('error').subscribe(error => console.log('plugin e rror', error));
   }

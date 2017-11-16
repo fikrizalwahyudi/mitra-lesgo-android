@@ -97,13 +97,15 @@ const confis = {
     TextMaskModule,
     IonicImageViewerModule,
     IonicModule.forRoot(MyApp, {
-      mode:'ios'
+      mode: 'ios'
     }),
     Ionic2RatingModule,
     AngularFireModule.initializeApp(confis),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCsCcTL_NLswlKyQ0mweNB-DLY3tHVn9P4',
-      libraries: ['places']
+      libraries: ['places'],
+      language: 'id',
+      region: 'ID'
     })
   ],
   bootstrap: [IonicApp],

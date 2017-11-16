@@ -118,7 +118,10 @@ export class OrderGuruPage {
   }
   startLesson(index) {
     //console.log(key);
-    if (moment(this.data.sessions[index].date).format('MM-DD-YYYY') != moment(new Date()).format('MM-DD-YYYY')) {
+    console.log('current', moment(this.data.sessions[index].date, 'DD-MM-YYYY').format('MM-DD-YYYY'))
+    console.log('next', moment(new Date()).format('MM-DD-YYYY'))
+
+    if (moment(this.data.sessions[index].date, 'DD-MM-YYYY').format('MM-DD-YYYY') != moment(new Date()).format('MM-DD-YYYY')) {
       let tutorAlert = this.alertCtrl.create({
         title: 'Maaf sesi tersebut belum dapat dimulai',
         enableBackdropDismiss: false,

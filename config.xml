@@ -45,6 +45,7 @@
         <splash density="land-xxxhdpi" src="resources/android/splash/drawable-land-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
+        <resource-file src="GoogleService-Info.plist" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <splash height="1136" src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" />
@@ -92,14 +93,15 @@
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.5.7:8100" />
     <engine name="android" spec="^6.2.3" />
+    <engine name="ios" spec="~4.4.0" />
     <plugin name="com.megster.cordova.FileChooser" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-calendar" spec="^4.5.5">
-        <variable name="CALENDAR_USAGE_DESCRIPTION" value="Schedule class" />
+        <variable name="CALENDAR_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="take profile picture" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="take profile picture" />
+        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" value="take profile picture" />
     </plugin>
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
@@ -115,5 +117,4 @@
         <variable name="SENDER_ID" value="732818088048" />
     </plugin>
     <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
-    <engine name="ios" spec="~4.4.0" />
 </widget>

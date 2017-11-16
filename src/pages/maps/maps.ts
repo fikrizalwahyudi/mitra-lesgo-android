@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { NavController, Platform, ModalController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, Platform, ModalController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { MapsAPILoader, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
@@ -21,7 +21,9 @@ export class MapsPage {
   constructor(
     public viewCtrl: ViewController,
     public navParams: NavParams,
-    public _loader: MapsAPILoader
+    public _loader: MapsAPILoader,
+    public ngZone: NgZone,
+    public loadingCtrl: LoadingController,
   ) {
     this.autocomplete();
     this.loadMap();
@@ -33,18 +35,53 @@ export class MapsPage {
     })
     // this.map = {lat: -6.174668, lng:106.827126, zoom:15, panning:true, address:'Ketik lokasi anda untuk memindahkan pin'}
   }
+  // autocomplete() {
+  //   this._loader.load().then(() => {
+  //     let autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), {});
+  //     google.maps.event.addListener(autocomplete, 'place_changed', () => {
+  //       let place = autocomplete.getPlace();
+  //       this.map.lat = place.geometry.location.lat();
+  //       this.map.lng = place.geometry.location.lng();
+  //       this.map.address = place.formatted_address.substring(0, 50);
+  //       console.log(place);
+  //     });
+  //   });
+  // }
+
+
+
   autocomplete() {
+    let loading = this.loadingCtrl.create({ content: '<img src="./assets/loading.gif"/>', spinner: 'hide' });
+    loading.present();
     this._loader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete').getElementsByTagName('input')[0], {});
-      google.maps.event.addListener(autocomplete, 'place_changed', () => {
-        let place = autocomplete.getPlace();
-        this.map.lat = place.geometry.location.lat();
-        this.map.lng = place.geometry.location.lng();
-        this.map.address = place.formatted_address.substring(0, 50);
-        console.log(place);
+      // console.log(document.getElementById('autocomplete').getElementsByTagName('input'));
+      // console.log(document.getElementById('autocomplete').getElementsByTagName('input')[0]);
+      let autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), {});
+      console.log('element_autocomplete', autocomplete)
+      console.log('google.maps.event', google.maps.event)
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          console.log('changed place')
+          let place = autocomplete.getPlace();
+          this.map.lat = place.geometry.location.lat();
+          this.map.lng = place.geometry.location.lng();
+          this.map.address = place.formatted_address.substring(0, 50);
+          console.log('place', place);
+        });
       });
+      setTimeout(function () {
+        var container = document.getElementsByClassName('pac-container')[0];
+        console.log('container', container)
+        container.setAttribute('data-tap-disabled', 'true');
+        container.addEventListener('touchstart', function (e) {
+          console.log('event click', e)
+          e.stopImmediatePropagation();
+        });
+        loading.dismissAll();
+      }, 500);
     });
   }
+
   send() {
     this.viewCtrl.dismiss({ lat: this.map.lat, lng: this.map.lng, address: this.search });
   }

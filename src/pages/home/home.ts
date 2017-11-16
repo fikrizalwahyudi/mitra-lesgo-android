@@ -222,9 +222,9 @@ export class HomePage {
     loader.present();
     setTimeout(() => {
       this.myUserId = firebase.auth().currentUser.uid;
-      console.log(this.myUserId)
+      console.log('this.myUserId', this.myUserId)
       this.userService.getUserDataOnce(this.myUserId).subscribe(snapshot => {
-        console.log(snapshot.val());
+        console.log('snapshot.val()', snapshot.val());
         var data = snapshot.val();
         this.user = data;
         this.user.userId = snapshot.key;
@@ -251,14 +251,14 @@ export class HomePage {
               }
             ]
           });
-          console.log(this.user);
+          console.log('this.user', this.user);
           tutorAlert.present();
         }
         else {
           this.chatNotificationCs();
           this.chatNotificationMurid();
           this.totalOrder();
-          console.log(this.user)
+          console.log('this.user', this.user)
           this.setCalendar();
           this.status = true;
         }
@@ -336,35 +336,64 @@ export class HomePage {
         list = list.concat(schedule);
       }
     }
+    console.log('before delete calendar');
+    return this.Calendar.listCalendars().then((res: any) => {
+      console.log('list calendar')
+      console.log(res)
+      if (res.map(v => { return v.name }).indexOf('MitraLesgo') != -1) {
+        let hasOpen = false;
+        this.Calendar.deleteCalendar('MitraLesgo').then((res: any) => {
+          console.log('success delete calendar');
+          if (hasOpen) return;
+          this.doSetCalendar(list, openCalendar);
+          hasOpen = true;
+        }, (err: any) => {
+          console.log('err delete calendar');
+          if (hasOpen) return;
+          this.doSetCalendar(list, openCalendar);
+          hasOpen = true;
+        })
+        setTimeout(() => {
+          if (hasOpen) return;
+          this.doSetCalendar(list, openCalendar);
+          hasOpen = true;
+        }, 5000)
+      } else {
+        return this.doSetCalendar(list, openCalendar);
+      }
+    })
+  }
+
+  doSetCalendar(list: any[], openCalendar?: boolean) {
+    console.log('in doSetCalendar', list)
     let options = this.Calendar.getCalendarOptions();
     options.calendarName = "MitraLesgo";
-    options.calendarId = 1;
-    options.id = 'mitralesgo';
     options.firstReminderMinutes = 360;
     options.secondReminderMinutes = 60;
-    let promises = [];
-    for (let i = 0; i < list.length; i++) {
-      await this.Calendar.findEventWithOptions(list[i].title, list[i].location, list[i].note, list[i].startDate, list[i].endDate, options).then((res: any) => {
-
-        console.log('res', res)
-        if (!res.length) {
-          return this.setScheduleData(list[i], options)
-        }
-      })
-    }
-    this.loading.dismissAll();
-    if (openCalendar) {
-      await setTimeout(() => {
-        this.Calendar.openCalendar(new Date());
-      }, 100)
-    }
+    this.setScheduleData(list, options).then((res: any) => {
+      console.log('set scheduleDate');
+      this.loading.dismissAll();
+      if (openCalendar) {
+        setTimeout(() => {
+          this.Calendar.openCalendar(new Date());
+        }, 100)
+      }
+    }, (err: any) => {
+      console.log('err setSCheduleData');
+      this.loading.dismissAll();
+      if (openCalendar) {
+        setTimeout(() => {
+          this.Calendar.openCalendar(new Date());
+        }, 100)
+      }
+    })
   }
 
-  async setScheduleData(list: any, options) {
-    await this.Calendar.createEventWithOptions(list.title, list.location, list.note, list.startDate, list.endDate, options).then()
+  async setScheduleData(list: any[], options) {
+    for (let k in list) {
+      await this.Calendar.createEventWithOptions(list[k].title, list[k].location, list[k].note, list[k].startDate, list[k].endDate, options)
+    }
   }
-
-
 
   public uploadImage(data, fileType) {
     // Destination URL

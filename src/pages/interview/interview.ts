@@ -22,7 +22,7 @@ export class InterviewPage {
     public platform: Platform,
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public navParams: NavParams
+    public navParams: NavParams,
   ) {
     this.uid = this.navParams.get('dataUser').uid;
     this.getData();
@@ -31,6 +31,7 @@ export class InterviewPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad InterviewPage');
   }
+
   jawabBenar() {
     firebase.database().ref('interview').child(this.uid).set(this.jawaban).then(() => {
       firebase.database().ref('users').child(this.uid).update({ stateVerification: 4 }).then(() => {
@@ -38,8 +39,8 @@ export class InterviewPage {
         this.status = true;
       })
     });
-
   }
+
   getData() {
     firebase.database().ref('interview').child(this.uid).once('value').then(snapshot => {
       // this.checkData(snapshot.val());÷

@@ -315,7 +315,8 @@ export class SchedulePage {
     toast.present();
   }
   openCalendar() {
-    this.setCalendar(true)
+    // this.setCalendar(true)
+    return this.Calendar.openCalendar(new Date());
   }
 
 
