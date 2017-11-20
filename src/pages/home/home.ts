@@ -270,6 +270,7 @@ export class HomePage {
 
 
   setCalendar(openCalendar?) {
+    // this.initDataCalendar(openCalendar)
     this.Calendar.hasReadWritePermission().then((result) => {
       if (result === false) {
         this.Calendar.requestReadWritePermission().then((v) => {
@@ -283,13 +284,13 @@ export class HomePage {
     })
   }
   getYear(date) {
-    return parseInt(moment(date, 'MM-DD-YYYY').format('YYYY'))
+    return parseInt(moment(date, 'DD-MM-YYYY').format('YYYY'))
   }
   getMonth(date) {
-    return parseInt(moment(date, 'MM-DD-YYYY').format('MM'))
+    return parseInt(moment(date, 'DD-MM-YYYY').format('MM'))
   }
   getDay(date) {
-    return parseInt(moment(date, 'MM-DD-YYYY').format('DD'))
+    return parseInt(moment(date, 'DD-MM-YYYY').format('DD'))
   }
 
   initDataCalendar(openCalendar?) {
@@ -313,6 +314,7 @@ export class HomePage {
   }
 
   async cekSchedule(allOrder: any[], openCalendar?) {
+    console.log('xxxxx')
     let list: any[] = [];
     for (let i = 0; i < allOrder.length; i++) {
       if (allOrder[i].status == 'booked') {
@@ -324,6 +326,7 @@ export class HomePage {
         let namaMurid = allOrder[i].namaMurid;
         let alamat = allOrder[i].alamatMurid ? allOrder[i].alamatMurid : 'Rumah Murid';
         let schedule = allOrder[i].sessions.map((v: any, key: number) => {
+          console.log('v', v)
           let newV = {
             title: `Lesgo sesi ke ${key + 1} ${matpel} untuk murid ${namaMurid}`,
             location: alamat,
@@ -337,9 +340,15 @@ export class HomePage {
       }
     }
     console.log('before delete calendar');
+
+    // this.loading.dismissAll();
+
     return this.Calendar.listCalendars().then((res: any) => {
       console.log('list calendar')
       console.log(res)
+      for (let k in list) {
+        console.log('list[k]', list[k])
+      }
       if (res.map(v => { return v.name }).indexOf('MitraLesgo') != -1) {
         let hasOpen = false;
         this.Calendar.deleteCalendar('MitraLesgo').then((res: any) => {
