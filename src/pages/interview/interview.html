@@ -16,8 +16,8 @@
 <ion-content padding>
   <template [ngIf]="status != true">
     <template ngFor let-item [ngForOf]="jawaban" let-i="index">
-      <ion-card class="question">
-        <ion-card-header>
+      <ion-card class="question" >
+        <ion-card-header style="white-space: normal !important;">
           <img class="quesky" src="assets/question.png" /> {{i+1}}. {{item.pertanyaan}}
         </ion-card-header>
         <ion-item class="box">
@@ -41,7 +41,7 @@
 
     <ion-row>
       <ion-col style="text-align:center;">
-        <button ion-button class="login-button" icon-right (click)="jawabBenar()">
+        <button ion-button class="login-button" style=" background-color: #39b54a; height: 40px !important; padding: 0 !important;" icon-right (click)="jawabBenar()">
           Submit
         </button>
       </ion-col>

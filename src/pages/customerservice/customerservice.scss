@@ -2,6 +2,13 @@ page-customerservice {
       .navtitle{
         height:10%;
       }
+      .content-scroll {
+        background-image: url(assets/patterna.png);
+        background-position: initial !important;
+        background-repeat: repeat!important;
+        background-size: cover !important;
+        overflow: scroll;
+      }
       .header {
         .toolbar{
           height:17%;
@@ -17,6 +24,9 @@ page-customerservice {
           // .toolbar{
           //   height:17%;
           // }
+          .toolbar-background {
+            background: #39b54a;
+          }
           .toolbar-background-md{
             background: #39b54a;
           }

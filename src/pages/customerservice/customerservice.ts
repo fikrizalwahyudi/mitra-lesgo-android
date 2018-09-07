@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, AlertController, ActionSheetController, ModalController, ToastController, Platform, Content, LoadingController, Loading } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import { FilePath } from '@ionic-native/file-path';
@@ -107,13 +107,30 @@ export class CustomerservicePage {
         })
       }
       setTimeout(() => {
-        this.scrollToBottom();
+        // this.content.scrollToBottom(300);
+        // this.scrollToBottom();
+        // console.log("chat.length", this.myChat.length);
+        var i = "chat" + this.chatData.length;
+        // console.log("iiii", i);
+        var element = document.getElementById(i);
+        // console.log(element);
+        element.scrollIntoView();
+        // console.log("kepanggil 2 ");
+
         loader.dismissAll();
-      });
+        // this.myChat = this.myChat.reverse();
+      }, 2000);
       console.log(this.chatData);
       console.log(snapshot);
     })
   }
+
+  scrollToBottom(elem: ElementRef) {
+    // this.messages.push('message_added');
+    elem.nativeElement.scrollIntoView();
+    // this.content.scrollToBottom(300);
+  }
+
   openThis(name: string) {
     if (name == 'back') {
       this.navCtrl.pop();
@@ -210,13 +227,13 @@ export class CustomerservicePage {
     });
   }
 
-  scrollToBottom() {
-    console.log('this.content', this.content)
-    if (!this.content) return;
-    let dimension = this.content.getContentDimensions();
-    console.log('dimension', dimension)
-    this.content.scrollTo(300, dimension.scrollHeight);
-  }
+  // scrollToBottom() {
+  //   console.log('this.content', this.content)
+  //   if (!this.content) return;
+  //   let dimension = this.content.getContentDimensions();
+  //   console.log('dimension', dimension)
+  //   this.content.scrollTo(300, dimension.scrollHeight);
+  // }
 
   public presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({

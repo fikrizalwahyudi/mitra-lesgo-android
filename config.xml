@@ -92,9 +92,10 @@
     </feature>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.5.7:8100" />
+    <allow-navigation href="http://192.168.5.8:8100" />
+    <allow-navigation href="http://192.168.1.4:8100" />
+    <allow-navigation href="http://192.168.5.4:8100" />
     <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="~4.4.0" />
-    <plugin name="com.megster.cordova.FileChooser" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-calendar" spec="^4.5.5">
         <variable name="CALENDAR_USAGE_DESCRIPTION" value=" " />
@@ -116,6 +117,8 @@
     <plugin name="phonegap-plugin-push" spec="^2.0.0">
         <variable name="SENDER_ID" value="732818088048" />
     </plugin>
-    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
-    <allow-navigation href="http://192.168.5.8:8100" />
+    <plugin name="mx.ferreyra.callnumber" spec="0.0.2" />
+    <plugin name="call-number" spec="^1.0.1" />
+    <allow-navigation href="http://192.168.5.12:8100" />
+    <engine name="ios" spec="~4.4.0" />
 </widget>

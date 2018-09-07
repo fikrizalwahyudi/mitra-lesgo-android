@@ -54,11 +54,11 @@
 <ion-grid>
   <ion-row class="calendar" *ngIf="stateVerification != 1 && stateVerification != 2">
     <ion-col>
-      <button ion-button clear full rounded style="background-color:#53b538;color:white;" class="teaching" (click)="onOff = false;" *ngIf="onOff == true">Teaching</button>
-      <button ion-button clear full rounded style="background-color:red;color:white;" class="holiday" (click)="onOff = true;" *ngIf="onOff == false">On Holiday</button>
+      <button ion-button clear full rounded style="background-color:#53b538;color:white; height: 40px !important; padding: 0 !important; font-size: 2rem;" class="teaching" (click)="onOff = false;" *ngIf="onOff == true">Teaching</button>
+      <button ion-button clear full rounded style="background-color:red;color:white; height: 40px !important; padding: 0 !important; font-size: 2rem;" class="holiday" (click)="onOff = true;" *ngIf="onOff == false">On Holiday</button>
     </ion-col>
     <ion-col>
-      <button ion-button clear full style="background-color:#53b538;color:white;" class="teaching" (click)="openCalendar()">Open Calendar</button>
+      <button ion-button clear full style="background-color:#53b538;color:white; height: 40px !important; padding: 0 !important; font-size: 2rem;" class="teaching" (click)="openCalendar()">Open Calendar</button>
     </ion-col>
   </ion-row>
 
@@ -149,13 +149,13 @@
   </ion-row> -->
   <ion-row>
     <ion-col>
-      <button ion-button full rounded center style="background-color:#39b54a" class="login-button" (click)="dismiss()">
+      <button ion-button full rounded center style=" background-color: #39b54a; height: 40px !important; padding: 0 !important;" class="login-button" (click)="dismiss()">
         Back
       </button>
     </ion-col>
 
     <ion-col>
-      <button ion-button full rounded center style="background-color:#39b54a" class="login-button" (click)="updateSchedule()">
+      <button ion-button full rounded center style=" background-color: #39b54a; height: 40px !important; padding: 0 !important;" class="login-button" (click)="updateSchedule()">
         Save
       </button>
     </ion-col>

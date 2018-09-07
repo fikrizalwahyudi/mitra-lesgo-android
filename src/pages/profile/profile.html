@@ -85,7 +85,7 @@
 
     <ion-row>
       <ion-col>
-        <button class="login-button" ion-button icon-left (click)="presentActionSheet('profile')">
+        <button class="login-button" ion-button icon-left (click)="presentActionSheet('profile')" style=" height: 30px; padding: 0;; width: 150px;">
             Select Image
           </button>
       </ion-col>
@@ -241,22 +241,22 @@
     </ion-row>
     <ion-row *ngIf="stateVerification != undefined">
       <ion-col center>
-        <button ion-button class="login-button" (click)="uploadFile()" *ngIf="dataTutor.cvUrl=='' || dataTutor.cvUrl == undefined ">
+        <button style=" height: 30px; padding: 0;; width: 150px;" ion-button class="login-button" (click)="uploadFile()" *ngIf="dataTutor.cvUrl=='' || dataTutor.cvUrl == undefined ">
 
                   Isi CV
               </button>
-        <button ion-button class="login-button" icon-left (click)="uploadFile()" *ngIf="dataTutor.cvUrl != '' && dataTutor.cvUrl != undefined ">
+        <button style=" height: 30px; padding: 0;; width: 150px;" ion-button class="login-button" icon-left (click)="uploadFile()" *ngIf="dataTutor.cvUrl != '' && dataTutor.cvUrl != undefined ">
 
                   CV Terisi
               </button>
       </ion-col>
 
       <ion-col center>
-        <button ion-button class="login-button" (click)="presentActionSheet('KTP')" *ngIf="dataTutor.ktpUrl=='' || dataTutor.ktpUrl == undefined ">
+        <button style=" height: 30px; padding: 0;; width: 150px;" ion-button class="login-button" (click)="presentActionSheet('KTP')" *ngIf="dataTutor.ktpUrl=='' || dataTutor.ktpUrl == undefined ">
 
                 upload KTP
               </button>
-        <button ion-button class="login-button" (click)="presentActionSheet('KTP')" *ngIf="dataTutor.ktpUrl != '' && dataTutor.ktpUrl != undefined ">
+        <button style=" height: 30px; padding: 0;; width: 150px;" ion-button class="login-button" (click)="presentActionSheet('KTP')" *ngIf="dataTutor.ktpUrl != '' && dataTutor.ktpUrl != undefined ">
 
                 KTP Terupload
               </button>
@@ -265,7 +265,7 @@
 
     <ion-row>
       <ion-col center>
-        <button ion-button class="login-button" (click)="saveProfile()">
+        <button style=" height: 30px; padding: 0;; width: 150px;" ion-button class="login-button" (click)="saveProfile()">
 
                   Save User
                 </button>
